@@ -1,0 +1,10 @@
+html
+    body
+        form(action='/favors' method='POST')
+          div.form-group
+            label(for='name') Name:
+            input(type='text' name='name')
+          div.form-group
+            label(for='fabor') Favor:
+            input(type='text' name='favor')
+          button.btn.btn-primary(type='submit') Create new favor
