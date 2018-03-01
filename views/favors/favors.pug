@@ -1,8 +1,14 @@
 html
+    include ../partials/header.html
     body
-        h1='hello'
-        a(href='/favors/new') New favor:
-        p='this is a favor object'
-        each favor in favors
-            h1=favor.description
-            a(href='/text') see favor
+        div(class='ui orange three item menu')
+            a(class='active item' href='/') Home
+            a(class='active item') Sign Up
+            a(class='active item') Login
+        div(class='ui segment center')
+            h1.header='hello'
+            a(class ='ui positive button' href='/favors/new') New favor:
+            each favor in favors
+                h1=favor.name
+                a(class='ui green basic button' href=`/favors/${favor.id}`) see favor
+    include ../partials/footer.html

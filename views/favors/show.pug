@@ -1,3 +1,8 @@
 html
+    include ../partials/header.html
     body
-        h1='here\'s one random favor'
+        div(class='ui items')
+            div(class='ui content')
+                p(class='ui header' id='favor_name')=`${favor.name}`
+                p(class='ui description')=`${favor.description}`
+        a(class='ui green basic button' href='/favors') Back to all favors
