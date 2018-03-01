@@ -1,34 +1,17 @@
 const express = require('express');
 const app = express();
 let router  = express.Router();
-
-let favors = [
-    {
-        id: 1,
-        description: 'this and this and this and that',
-        user: 1
-    },
-
-    {
-        id: 2,
-        description: 'nightvale',
-        user: 2
-    },
-
-    {
-        id: 3,
-        description: 'wrong description',
-        user: 1
-    }
-]
+const db = require('../db');
 
 //INDEX - show all favors
 router.get('/', function(req, res) {
-    res.render('favors/favors', { favors });
+    res.render('favors/favors', { favors: db.favors });
 });
 
 //CREATE - add new favor to DB
 router.post('/', function(req, res) {
+    let newFavor = {id: db.favors.length + 1, name: req.body.name, description: req.body.favor, user: null};
+    db.favors.push(newFavor);
     res.redirect('/favors');
       // need to redirect to all favors and display new favor that was just created
   });
@@ -40,7 +23,11 @@ router.get('/new', function(req, res) {
 
 // SHOW - shows more info about one favor
 router.get('/:favorId', function(req, res) {
-    res.render('favors/show');
+    console.log(db.favors)
+    const favor = db.favors.find((item) => {
+        return item.id === Number(req.params.favorId)
+    })
+    res.render('favors/show', { favor });
 });
 
 // EDIT FAVOR ROUTE
