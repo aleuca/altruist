@@ -6,3 +6,5 @@ html
                 p(class='ui header' id='favor_name')=`${favor.favor_name}`
                 p(class='ui description')=`${favor.favor_description}`
         a(class='ui green basic button' href='/favors') Back to all favors
+        form(action=`/favors/${favor.favor_id}?_method=DELETE` method='POST')
+            button(class='ui green basic button') Delete favor
