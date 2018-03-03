@@ -1,14 +1,16 @@
 html
     include ../partials/header.html
     body
-        div(class='ui orange three item menu')
-            a(class='active item' href='/') Home
-            a(class='active item') Sign Up
-            a(class='active item') Login
+        div(class='ui orange four item menu')
+            div(class='ui circular image item' id='logo')
+                img(src='/images/whale.png' class='ui circular image item whale')
+                p='The ALtruist'
+            a(class='active item navigation' href='/') Home
+            a(class='active item navigation') Sign Up
+            a(class='active item navigation') Login
         div(class='ui segment center')
-            h1.header='hello'
             a(class ='ui positive button' href='/favors/new') New favor:
             each favor in favors
-                h1=favor.name
-                a(class='ui green basic button' href=`/favors/${favor.id}`) see favor
+                h1=favor.favor_name
+                a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
     include ../partials/footer.html

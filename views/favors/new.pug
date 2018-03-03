@@ -2,9 +2,18 @@ html
     body
         form(action='/favors' method='POST')
           div.form-group
-            label(for='name') Name:
-            input(type='text' name='name')
+            label(for='name') Favor Name:
+            input(type='text' name='favor_name')
           div.form-group
-            label(for='fabor') Favor:
-            input(type='text' name='favor')
+            label(for='favor') Favor Description:
+            input(type='text' name='favor_description')
+          div.form-group
+            label(for='favor_difficuty') Favor Difficulty:
+            select(name='favor_difficulty')
+              option(value='Easy' name='Easy') Easy
+              option(value='Medium' name='Medium') Medium
+              option(value='Hard' name='Hard') Hard
+          div.form-group
+            label(for='expiry_date') Favor Length:
+            input(type ='date' name='expiry_date')
           button.btn.btn-primary(type='submit') Create new favor
