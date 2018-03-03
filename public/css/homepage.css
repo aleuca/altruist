@@ -1,0 +1,26 @@
+.header {
+    text-align: center;
+}
+
+#favor_name {
+    text-align: left;
+}
+
+.menu {
+    height: 7%;
+    display: block;
+
+}
+
+.navigation {
+    width: 25%;
+    clear: both;
+}
+
+.ui.menu.four.item .item {
+    width: 30%;
+}
+
+#logo {
+    width: 10%;
+}
