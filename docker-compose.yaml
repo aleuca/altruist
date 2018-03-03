@@ -1,0 +1,26 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    ports:
+      - 5000:5000
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    container_name: altruist_db
+    image: postgres:9.6.5-alpine
+    environment:
+      POSTGRES_DB: altruist_database
+      POSTGRES_USER: the_altruist
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5555:5432"
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+volumes:
+  data-volume:
