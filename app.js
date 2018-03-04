@@ -2,8 +2,8 @@ const express = require('express'),
       app = express(),
       parser = require('body-parser'),
       passport = require('passport'),
-      LocalStrategy = require('passport-local'),
-      encrypt = require('bcrypt'),
+      session = require('express-session'),
+      LocalStrategy = require('passport-local').Strategy,
       methodOverride = require('method-override');
       port = 5000;
 
@@ -16,6 +16,24 @@ app.use(parser.urlencoded({extended: true}));
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
+app.use((req, res, next) => {
+    console.log("Request:", req.path, req.method, req.body)
+    next()
+})
+
+// ====================
+// PASSPORT CONFIG
+// ====================
+
+app.use(session({
+    rolling: true,
+    saveUninitialized: false,
+    secret: 'fuckety fuck',
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 app.get('/', function(req, res) {
@@ -32,5 +50,3 @@ app.listen(process.env.PORT || port, function(){
 });
 
 
-// ====================
-// PASSPORT CONFIG
