@@ -2,14 +2,16 @@ const express = require('express');
 const app = express();
 let router  = express.Router();
 const db = require('../altruist_database');
+const { authenticateSession: sessionAuth } = require('./authentication')
 
 //INDEX - show all favors
 router.get('/', function(req, res) {
+    console.log("User, session:", req.user, req.session)
     const query = 'SELECT * FROM db.favors'
     db.query(query)
     .then((dbResponse) => {
         console.log(dbResponse.rows)
-        res.render('favors/favors', { favors: dbResponse.rows })
+        res.render('favors/favors', { favors: dbResponse.rows, currentUser: req.user })
     })
     .catch((err) => {
         res.status(400).send(err)
@@ -35,7 +37,7 @@ router.post('/', function(req, res) {
   });
 
 //NEW - show form to create new favor
-router.get('/new', function(req, res) {
+router.get('/new', sessionAuth, function(req, res) {
     res.render('favors/new');
 });
 
