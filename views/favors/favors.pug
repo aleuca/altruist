@@ -5,6 +5,8 @@ html
             div(class='ui circular image item' id='logo')
                 img(src='/images/whale.png' class='ui circular image item whale')
                 p='The ALtruist'
+                if currentUser
+                    p=`${currentUser.user_name}`
             a(class='active item navigation' href='/') Home
             a(class='active item navigation') Sign Up
             a(class='active item navigation') Login
