@@ -55,7 +55,7 @@ router.get('/:favorId', function(req, res) {
 });
 
 // EDIT FAVOR ROUTE
-router.get('/:favorId/edit', function(req, res) {
+router.get('/:favorId/edit', sessionAuth, function(req, res) {
     const query = `SELECT * FROM db.favors WHERE favor_id = ${req.params.favorId}`
     db.query(query)
     .then((dbResponse) => {
@@ -67,7 +67,7 @@ router.get('/:favorId/edit', function(req, res) {
 });
 
 // UPDATE FAVOR ROUTE
-router.post('/:favorId', function (req, res) {
+router.post('/:favorId', sessionAuth, function (req, res) {
     const query = `UPDATE db.favors SET (favor_name, favor_description, expiry_date, favor_difficulty) = ($1, $2, $3, $4) WHERE favor_id = ${req.params.favorId}`
     const values = [req.body.favor_name, req.body.favor_description, req.body.expiry_date, req.body.favor_difficulty]
     db.query(query, values)
@@ -81,7 +81,7 @@ router.post('/:favorId', function (req, res) {
 });
 
 // DESTROY FAVOR ROUTE
-router.delete('/:favorId', function(req, res) {
+router.delete('/:favorId', sessionAuth,  function(req, res) {
     const query = `DELETE FROM db.favors WHERE favor_id = ${req.params.favorId}`
     db.query(query)
     .then((dbResponse) => {

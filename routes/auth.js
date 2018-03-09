@@ -2,11 +2,12 @@ let express = require("express");
 let router = express.Router();
 let passport = require("passport");
 const db = require('../altruist_database');
-const { authenticateLogin: userAuth } = require('./authentication')
+const { authenticateLogin: userAuth } = require('./authentication');
+const { encrypt, secret } = require('./authentication');
 
 
 router.get('/signup', function(req, res) {
-    res.render('signup')
+    res.render('signup');
 });
 
 router.get('/users', function(req, res) {
@@ -23,9 +24,9 @@ router.get('/users', function(req, res) {
 });
 
 router.post('/users', function(req, res) {
-    console.log(req.body)
+
     const query = 'INSERT INTO db.users(user_name, user_password, user_email) VALUES($1, $2, $3)'
-    const values = [req.body.user_name, req.body.user_password, req.body.user_email]
+    const values = [req.body.user_name, encrypt(req.body.user_password, secret), req.body.user_email]
 
     db.query(query, values)
     .then ((dbResponse) => {
@@ -43,6 +44,16 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', userAuth, (req, res) => {
+    res.redirect('/favors');
+});
+
+router.post('/logout', (req, res) => {
+    if(req.session) {
+        req.session.destroy((err) => {
+            res.redirect('/favors');
+        })
+        return;
+    }
     res.redirect('/favors');
 });
 

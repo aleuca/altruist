@@ -2,8 +2,10 @@
 const db = require('../../altruist_database')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-
+const crypto = require('crypto');
+const algorithm = 'aes-256-ctr';
+const secret = "secret_secret";
+// eventually, secret should be an environment variable
 
 passport.use(new LocalStrategy({},
     // get user from db by username
@@ -16,17 +18,24 @@ passport.use(new LocalStrategy({},
         const values = [username]
 
         db.query(query, values)
-        .then((dbResponse) => {
-           if(dbResponse.rows.length && dbResponse.rows[0].user_password === password) {
-               done(null, dbResponse.rows[0]);
-               return;
-           }
+        .then((user) => {
+            const hash = encrypt(password, secret);
+
+            if(user) {
+                console.log("input password:", password, "hash:", hash, "user password:", user.rows[0].user_password);
+            }
+
+            if (user && hash === user.rows[0].user_password) {
+              done(null, user);
+            }
+
            done('username and/or password incorrect');
         })
         .catch((err) => {
-            done(err)
+            done(err);
         })
     }
+
 ))
 
 passport.serializeUser((user, done) => {
@@ -53,9 +62,11 @@ passport.deserializeUser((userId, done) => {
 })
 
 const authenticateLogin = passport.authenticate('local', {});
+
 function authenticateSession(req, res, next) {
     if(!req.session.passport) {
-        // throw error
+        res.redirect('/favors');
+        return;
     }
     // find user from database by id
     const id = req.user.user_id
@@ -75,7 +86,17 @@ function authenticateSession(req, res, next) {
     })
 }
 
+
+function encrypt(password, secret) {
+  let cipher = crypto.createCipher('aes-256-ctr', password)
+  let crypted = cipher.update(secret,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+
 module.exports = {
     authenticateLogin,
-    authenticateSession
+    authenticateSession,
+    encrypt,
+    secret
 }
