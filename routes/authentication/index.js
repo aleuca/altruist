@@ -26,7 +26,8 @@ passport.use(new LocalStrategy({},
             }
 
             if (user && hash === user.rows[0].user_password) {
-              done(null, user);
+              done(null, user.rows[0]);
+              return;
             }
 
            done('username and/or password incorrect');

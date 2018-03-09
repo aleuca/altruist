@@ -2,12 +2,18 @@ let express = require("express");
 let router = express.Router();
 let passport = require("passport");
 const db = require('../altruist_database');
+const { passwordValidator} = require('./validators');
 const { authenticateLogin: userAuth } = require('./authentication');
+const { authenticateSession: sessionAuth } = require('./authentication');
 const { encrypt, secret } = require('./authentication');
 
 
 router.get('/signup', function(req, res) {
-    res.render('signup');
+    if(!req.user) {
+        res.render('signup');
+    }
+
+    res.redirect('/favors');
 });
 
 router.get('/users', function(req, res) {
@@ -24,12 +30,12 @@ router.get('/users', function(req, res) {
 });
 
 router.post('/users', function(req, res) {
-
     const query = 'INSERT INTO db.users(user_name, user_password, user_email) VALUES($1, $2, $3)'
     const values = [req.body.user_name, encrypt(req.body.user_password, secret), req.body.user_email]
 
     db.query(query, values)
     .then ((dbResponse) => {
+        console.log('DB Response for user creation', dbResponse)
         res.redirect('/favors')
     // need validator for user email and if it exists in the database already
     // need validator for password and confirm password match
