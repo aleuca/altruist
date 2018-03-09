@@ -5,12 +5,17 @@ html
             div(class='ui circular image item' id='logo')
                 img(src='/images/whale.png' class='ui circular image item whale')
                 p='The ALtruist'
-                if currentUser
-                    p=`${currentUser.user_name}`
             a(class='active item navigation' href='/') Home
             a(class='active item navigation') Sign Up
-            a(class='active item navigation') Login
+            if currentUser
+                form(action=`/logout` method='POST')
+                    button(class='active item navigation') logout
+            if !currentUser
+                form(action=`/login`)
+                    button(class='active item navigation') login
         div(class='ui segment center')
+            if currentUser
+                h1=`${currentUser.user_name}`
             a(class ='ui positive button' href='/favors/new') New favor:
             each favor in favors
                 h1=favor.favor_name
