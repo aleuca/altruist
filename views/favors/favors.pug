@@ -6,7 +6,8 @@ html
                 img(src='/images/whale.png' class='ui circular image item whale')
                 p='The ALtruist'
             a(class='active item navigation' href='/') Home
-            a(class='active item navigation') Sign Up
+            if !currentUser
+                a(class='active item navigation' href='/signup') Sign Up
             if currentUser
                 form(action=`/logout` method='POST')
                     button(class='active item navigation') logout
@@ -19,5 +20,7 @@ html
             a(class ='ui positive button' href='/favors/new') New favor:
             each favor in favors
                 h1=favor.favor_name
-                a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
+                if currentUser
+                    if `${currentUser.user_id}` === `${favor.user_id}`
+                        a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
     include ../partials/footer.html
