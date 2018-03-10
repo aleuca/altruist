@@ -9,7 +9,6 @@ router.get('/', function(req, res) {
     const query = 'SELECT * FROM db.favors'
     db.query(query)
     .then((dbResponse) => {
-        console.log(dbResponse.rows)
         res.render('favors/favors', { favors: dbResponse.rows, currentUser: req.user })
     })
     .catch((err) => {

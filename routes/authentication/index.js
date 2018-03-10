@@ -18,15 +18,16 @@ passport.use(new LocalStrategy({},
         const values = [username]
 
         db.query(query, values)
-        .then((user) => {
+        .then((dbResponse) => {
             const hash = encrypt(password, secret);
+            const user = dbResponse.rows[0];
 
             if(user) {
-                console.log("input password:", password, "hash:", hash, "user password:", user.rows[0].user_password);
+                console.log("input password:", password, "hash:", hash, "user password:", user.user_password);
             }
 
-            if (user && hash === user.rows[0].user_password) {
-              done(null, user.rows[0]);
+            if (user && hash === user.user_password) {
+              done(null, user);
               return;
             }
 
