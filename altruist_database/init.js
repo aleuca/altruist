@@ -15,7 +15,6 @@ const schema = fs.readFileSync(schemaPath).toString();
 
 db.query(schema)
 .then((dbResponse) => {
-    console.log('Database Response:', dbResponse)
     process.exit(0);
 })
 .catch((err) => {
