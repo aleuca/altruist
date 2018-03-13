@@ -9,10 +9,11 @@ router.get('/', function(req, res) {
     const query = 'SELECT * FROM db.favors'
     db.query(query)
     .then((dbResponse) => {
-        res.render('favors/favors', { favors: dbResponse.rows, currentUser: req.user })
+        let sortedFavors = dbResponse.rows.sort().reverse();
+        res.render('favors/favors', { favors: sortedFavors, currentUser: req.user });
     })
     .catch((err) => {
-        res.status(400).send(err)
+        res.status(400).send(err);
     })
 });
 

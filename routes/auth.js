@@ -3,7 +3,7 @@ let router = express.Router();
 let passport = require("passport");
 const db = require('../altruist_database');
 const { insertUser } = require('../altruist_database/queries');
-const { passwordValidator} = require('./validators');
+const { passwordValidator } = require('./validators');
 const {
     encrypt,
     secret,
@@ -34,17 +34,32 @@ router.get('/users', function(req, res) {
 });
 
 router.post('/users', function(req, res) {
-    const validated = passwordValidator(req.body.user_password, req.body.user_password_confirmation);
+    const validPassword = passwordValidator(req.body.user_password, req.body.user_password_confirmation);
+    const query = 'SELECT user_email FROM db.users'
 
-    console.log(validated, typeof req.body.user_password, typeof req.body.user_password_confirmation )
-
-    if(validated) {
-        insertUser(req, res);
-        return;
-    }
-
-    //Need to fix this error
-    res.redirect('/favors')
+    return db.query(query)
+    .then((dbResponse) => {
+        for (row in dbResponse.rows) {
+            if(row.user_email === req.body.user_email) {
+                return false
+            }
+        }
+        return true
+    })
+    .catch((err) => {
+        if(err) {
+            // user exists in the database -- handle this
+            return false
+        }
+    })
+    .then((validEmail) => {
+        if(validPassword && validEmail) {
+            insertUser(req, res);
+            return;
+        }
+        //Need to fix this error
+        res.redirect('/favors')
+    })
 
 });
 
