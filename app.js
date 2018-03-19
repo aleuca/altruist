@@ -10,16 +10,17 @@ const express = require('express'),
 const favorRoutes = require('./routes/favors');
 const commentRoutes = require('./routes/comments');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
 
 
 app.use(parser.urlencoded({extended: true}));
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
-app.use((req, res, next) => {
-    console.log("Request:", req.path, req.method, req.body)
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log("Request:", req.path, req.method, req.body)
+//     next()
+// })
 
 // ====================
 // PASSPORT CONFIG
@@ -41,8 +42,10 @@ app.get('/', function(req, res) {
 });
 
 app.use(authRoutes);
+app.use('/users', userRoutes);
 app.use('/favors/:favorId/comments', commentRoutes);
 app.use('/favors', favorRoutes);
+
 
 
 app.listen(process.env.PORT || port, function(){
