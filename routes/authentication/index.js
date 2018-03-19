@@ -7,18 +7,23 @@ const algorithm = 'aes-256-ctr';
 const secret = "secret_secret";
 // eventually, secret should be an environment variable
 
-passport.use(new LocalStrategy({},
+passport.use(new LocalStrategy({
+    usernameField: 'user_name',
+    passwordField: 'user_password'
+},
     // get user from db by username
     // check password
     // if correct: done(null, user)
     // else: done(err)
     // to validate a login
     (username, password, done) => {
+        console.log("have username and password:", username, password)
         const query = `SELECT * FROM db.users WHERE user_name = $1`
         const values = [username]
 
         db.query(query, values)
         .then((dbResponse) => {
+            console.log("Local strategy response:", dbResponse.rows)
             const hash = encrypt(password, secret);
             const user = dbResponse.rows[0];
 
@@ -34,6 +39,7 @@ passport.use(new LocalStrategy({},
            done('username and/or password incorrect');
         })
         .catch((err) => {
+            console.log("Error:", err)
             done(err);
         })
     }
