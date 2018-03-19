@@ -11,6 +11,7 @@ html
             if currentUser
                 form(action=`/logout` method='POST')
                     button(class='active item navigation') logout
+                a(class='active item navigation' href=`/users/${currentUser.user_id}`) my dash
             if !currentUser
                 form(action=`/login`)
                     button(class='active item navigation') login
@@ -20,7 +21,8 @@ html
             a(class ='ui positive button' href='/favors/new') New favor:
             each favor in favors
                 h1=favor.favor_name
+                p=favor.favor_description.substr(0,100) + '...'
+                a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
                 if currentUser
-                    if `${currentUser.user_id}` === `${favor.user_id}`
-                        a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
+                    a(class='ui green basic button' href=`/favors`) Add favor
     include ../partials/footer.html

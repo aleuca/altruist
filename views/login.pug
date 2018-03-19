@@ -4,9 +4,9 @@ html
       form(action='/login' method='POST')
         div.form-group
           label(for='username') Username:
-          input(type='text' name='username')
+          input(type='text' name='user_name')
         div.form-group
           label(for='password') Password:
-          input(type='password' name='password')
+          input(type='password' name='user_password')
         button.btn.btn-primary(type='submit') Login
         include ./partials/footer.html

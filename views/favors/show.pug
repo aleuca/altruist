@@ -7,4 +7,11 @@ html
                 p(class='ui description')=`${favor.favor_description}`
         a(class='ui green basic button' href='/favors') Back to all favors
         form(action=`/favors/${favor.favor_id}?_method=DELETE` method='POST')
-            button(class='ui green basic button') Delete favor
+            if currentUser
+                if `${currentUser.user_id}` === `${favor.user_id_owner}`
+                    button(class='ui green basic button') Delete favor
+        if currentUser
+            a(class='ui green basic button' href=`/favors/${favor.favor_id}/edit`) Edit favor
+            a(class='ui green basic button' href=`/favors`) Add favor
+
+
