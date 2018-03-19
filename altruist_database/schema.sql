@@ -19,8 +19,9 @@ CREATE TABLE db.favors(
     favor_date TEXT NOT NULL,
     expiry_date TEXT,
     favor_difficulty TEXT,
-    user_id INTEGER,
-    FOREIGN KEY(user_id) REFERENCES db.users(user_id)
+    user_id_accepted INTEGER,
+    user_id_owner INTEGER,
+    FOREIGN KEY(user_id_owner) REFERENCES db.users(user_id)
 );
 
 CREATE TABLE db.comments(
