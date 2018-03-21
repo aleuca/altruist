@@ -1,20 +1,21 @@
 include ../partials/header.pug
-form(action=`/favors/${favor.favor_id}` method='POST')
-  div.form-group
-    label(for='name') Favor Name:
-    input(type='text' name='favor_name' value=`${favor.favor_name}` required)
-  div.form-group
-    label(for='favor') Favor Description:
-    input(type='text' name='favor_description' value=`${favor.favor_description}` required)
-  div.form-group
-    label(for='favor_difficuty') Favor Difficulty:
-    select(name='favor_difficulty' value=`${favor.favor_difficulty}` required)
-      option(value='Easy' name='Easy') Easy
-      option(value='Medium' name='Medium') Medium
-      option(value='Hard' name='Hard') Hard
-  div.form-group
-    label(for='expiry_date') Favor Length:
-    input(type ='date' name='expiry_date' value=`${favor.expiry_date}`)
-  button.btn.btn-primary(type='submit') Update favor
-  a(class='ui green basic button' href=`/favors/${favor.favor_id}`) Back to my favor
+div(class='ui container')
+  form(action=`/favors/${favor.favor_id}` class='ui form' method='POST' id='new_favor_form')
+    div.form-group(class='field')
+      label(for='name') Favor Name:
+      input(type='text' name='favor_name' value=`${favor.favor_name}` required)
+    div.form-group(class='field')
+      label(for='favor_difficulty') Favor Difficulty:
+      select(name='favor_difficulty' value=`${favor.favor_difficulty}` required)
+        option(value='Easy' name='Easy') Easy
+        option(value='Medium' name='Medium') Medium
+        option(value='Hard' name='Hard') Hard
+    div.form-group(class='field')
+      label(for='expiry_date') Expiry Date:
+      input(type ='date' name='expiry_date' value=`${favor.expiry_date}`)
+    div.form-group(class='field')
+      label(for='favor_description') Favor Description:
+      textarea(type='text' rows="20" cols="100" form='new_favor_form' name='favor_description' value=`${favor.favor_description}` required)
+    button(class='ui blue basic button' type='submit') Update favor
+    a(class='ui blue basic button' href=`/favors/${favor.favor_id}` style='float: right') Cancel
 include ../partials/footer.html

@@ -58,11 +58,17 @@ router.post('/', function(req, res) {
 
 // SHOW -- user page with all favors
 router.get('/:id', sessionAuth, function(req, res) {
-    const query = `SELECT * FROM db.users where user_id = ${req.params.id}`
+    const ownedQuery = 'SELECT * FROM db.favors where user_id_owner = $1'
+    const acceptedQuery = 'SELECT * FROM db.favors where user_id_accepted = $1'
 
-    db.query(query)
-    .then ((dbResponse) => {
-        res.render('favors/userpage', { currentUser: req.user });
+    const userValues = [req.user.user_id]
+
+    Promise.all([
+        db.query(ownedQuery, userValues),
+        db.query(acceptedQuery, userValues),
+    ])
+    .then (([ownedResponse, acceptedResponse]) => {
+        res.render('favors/userpage', { currentUser: req.user, ownedFavors: ownedResponse.rows, acceptedFavors: acceptedResponse.rows });
     })
     .catch((err) => {
         res.status(400).send(err);

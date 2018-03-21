@@ -1,59 +1,44 @@
 include ../partials/header.pug
-body
-  p="hello"
-  table
+table(class='ui celled table')
+  thead
     tr
-      td='FAVORS'
-        table
+      th='My favors'
+  tbody
+    tr
+      table(class='ui celled table')
+        thead
           tr
-            td="FAVORS I'VE ACCEPTED"
-              table
-                tr
-                  td="Description"
-                  td="Length"
-                  td="Color"
-                tr
-                  td="Help me"
-                  td="3 weeks"
-                  td="Black"
-                tr
-                  td="Help me"
-                  td="3 weeks"
-                  td="Black"
-                  tr
-            td="MY FAVORS THAT HAVE BEEN ACCEPTED"
-              table
-                tr
-                  td="Description"
-                  td="Length"
-                  td="Color"
-                tr
-                  td="Help me"
-                  td="3 weeks"
-                  td="Black"
-                tr
-                  td="Help me"
-                  td="3 weeks"
-                  td="Black"
+            th="Name"
+            th="Status"
+            th="Difficulty"
+            th="Expiry Date"
+        tbody
+          each favor in ownedFavors
+            tr
+              td
+                a(href=`/favors/${favor.favor_id}`)=`${favor.favor_name}`
+              td=`${favor.favor_status}`
+              td=`${favor.favor_difficulty}`
+              td=`${favor.expiry_date}`
+
+table(class='ui celled table')
+    thead
       tr
-          td='MY OPEN FAVORS'
-              table
-                  tr
-                      td="Description"
-                      td="Length"
-                      td="Color"
-                  tr
-                      td="Help me"
-                      td="3 weeks"
-                      td="Black"
-                  tr
-                      td="Help me"
-                      td="3 weeks"
-                      td="Black"
-
-
-//-             favors I own
-//-     accepted            open
-//- ----------------- | ------------------
-//- --------------------------------------
-//- ---------------------------------------
+        th='Favors I\'ve Accepted'
+    tbody
+      tr
+        table(class='ui celled table')
+          thead
+            tr
+              th="Name"
+              th="Status"
+              th="Difficulty"
+              th="Expiry Date"
+          tbody
+            each favor in acceptedFavors
+              tr
+                td
+                  a(href=`/favors/${favor.favor_id}`)=`${favor.favor_name}`
+                td=`${favor.favor_status}`
+                td=`${favor.favor_difficulty}`
+                td=`${favor.expiry_date}`

@@ -1,19 +1,25 @@
 include ../partials/header.pug
-form(action='/favors' method='POST')
-  div.form-group
-    label(for='name') Favor Name:
-    input(type='text' name='favor_name' required)
-  div.form-group
-    label(for='favor') Favor Description:
-    input(type='text' name='favor_description')
-  div.form-group
-    label(for='favor_difficuty') Favor Difficulty:
-    select(name='favor_difficulty')
-      option(value='Easy' name='Easy') Easy
-      option(value='Medium' name='Medium') Medium
-      option(value='Hard' name='Hard') Hard
-  div.form-group
-    label(for='expiry_date') Favor Length:
-    input(type ='date' name='expiry_date')
-  button.btn.btn-primary(type='submit') Create new favor
+div(class='ui container')
+  form(action='/favors' class='ui form' method='POST' id='new_favor_form')
+    div.form-group(class='field')
+      label(for='name') Favor Name:
+      input(type='text' name='favor_name' required)
+    div.form-group(class='field')
+      label(for='favor_difficulty') Favor Difficulty:
+      select(name='favor_difficulty' required)
+        option(value='Easy' name='Easy') Easy
+        option(value='Medium' name='Medium') Medium
+        option(value='Hard' name='Hard') Hard
+    div.form-group(class='field')
+      label(for='expiry_date') Expiry Date:
+      input(type ='date' name='expiry_date')
+    div.form-group(class='field')
+      label(for='favor_description') Favor Description:
+      textarea(type='text' rows="20" cols="100" form='new_favor_form' name='favor_description' required)
+    button(class='ui blue basic button' type='submit') Save favor
+    a(class='ui blue basic button' href='/favors/' style='float: right') Back to all favors
 include ../partials/footer.html
+
+
+
+

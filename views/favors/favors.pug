@@ -2,7 +2,8 @@ include ../partials/header.pug
 div(class='ui segment center')
     if currentUser
         h1(style='display: inline-block;') Open Favors
-    a(class='ui blue button' href='/favors/new' style='float: right;') New favor
+        a(class='ui blue button' href='/favors/new' style='float: right;') New favor
+
     if !favors.length
         p='No favors to display. Post the first!'
     each favor in favors

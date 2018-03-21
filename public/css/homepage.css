@@ -6,10 +6,9 @@
     text-align: left;
 }
 
-/* .menu {
-    height: 7%;
-    display: block;
-} */
+div .form-group {
+    margin-bottom: 8px;
+}
 
 #logo {
     width: 70px;
