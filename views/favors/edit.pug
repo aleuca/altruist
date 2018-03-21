@@ -1,22 +1,20 @@
-html
-    include ../partials/header.html
-    body
-        form(action=`/favors/${favor.favor_id}` method='POST')
-          div.form-group
-            label(for='name') Favor Name:
-            input(type='text' name='favor_name' value=`${favor.favor_name}` required)
-          div.form-group
-            label(for='favor') Favor Description:
-            input(type='text' name='favor_description' value=`${favor.favor_description}` required)
-          div.form-group
-            label(for='favor_difficuty') Favor Difficulty:
-            select(name='favor_difficulty' value=`${favor.favor_difficulty}` required)
-              option(value='Easy' name='Easy') Easy
-              option(value='Medium' name='Medium') Medium
-              option(value='Hard' name='Hard') Hard
-          div.form-group
-            label(for='expiry_date') Favor Length:
-            input(type ='date' name='expiry_date' value=`${favor.expiry_date}`)
-          button.btn.btn-primary(type='submit') Update favor
-          a(class='ui green basic button' href=`/favors/${favor.favor_id}`) Back to my favor
-    include ../partials/footer.html
+include ../partials/header.pug
+form(action=`/favors/${favor.favor_id}` method='POST')
+  div.form-group
+    label(for='name') Favor Name:
+    input(type='text' name='favor_name' value=`${favor.favor_name}` required)
+  div.form-group
+    label(for='favor') Favor Description:
+    input(type='text' name='favor_description' value=`${favor.favor_description}` required)
+  div.form-group
+    label(for='favor_difficuty') Favor Difficulty:
+    select(name='favor_difficulty' value=`${favor.favor_difficulty}` required)
+      option(value='Easy' name='Easy') Easy
+      option(value='Medium' name='Medium') Medium
+      option(value='Hard' name='Hard') Hard
+  div.form-group
+    label(for='expiry_date') Favor Length:
+    input(type ='date' name='expiry_date' value=`${favor.expiry_date}`)
+  button.btn.btn-primary(type='submit') Update favor
+  a(class='ui green basic button' href=`/favors/${favor.favor_id}`) Back to my favor
+include ../partials/footer.html

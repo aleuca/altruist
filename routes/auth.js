@@ -29,7 +29,8 @@ router.post('/login', userAuth, (req, res) => {
     res.redirect('/favors');
 });
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
+    console.log("TRYING TO LOG OUT", req.session)
     if(req.session) {
         req.session.destroy((err) => {
             res.redirect('/favors');

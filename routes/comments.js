@@ -26,7 +26,7 @@ let favors = [
 
 
 router.get('/new', function(req, res) {
-    res.render('comments/new')
+    res.render('comments/new', { currentUser: req.user })
 })
 
 router.post('/', function(req, res) {
@@ -39,7 +39,7 @@ router.post('/', function(req, res) {
 
 // EDIT COMMENT ROUTE
 router.get('/:commentId/edit', function(req, res) {
-    res.render('comments/edit');
+    res.render('comments/edit', { currentUser: req.user });
 });
 
 // UPDATE COMMENT ROUTE

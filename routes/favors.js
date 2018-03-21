@@ -37,7 +37,7 @@ router.post('/', sessionAuth, function(req, res) {
 
 //NEW - show form to create new favor
 router.get('/new', sessionAuth, function(req, res) {
-    res.render('favors/new');
+    res.render('favors/new', { currentUser: req.user });
 });
 
 // SHOW - shows more info about one favor
@@ -58,7 +58,7 @@ router.get('/:favorId/edit', sessionAuth, function(req, res) {
     const query = `SELECT * FROM db.favors WHERE favor_id = ${req.params.favorId}`
     db.query(query)
     .then((dbResponse) => {
-        res.render('favors/edit', { favor: dbResponse.rows[0] });
+        res.render('favors/edit', { favor: dbResponse.rows[0], currentUser: req.user });
     })
     .catch((err) => {
         res.status(400).send(err);

@@ -1,28 +1,19 @@
-html
-    include ../partials/header.html
-    body
-        div(class='ui orange four item menu')
-            div(class='ui circular image item' id='logo')
-                img(src='/images/whale.png' class='ui circular image item whale')
-                p='The ALtruist'
-            a(class='active item navigation' href='/') Home
-            if !currentUser
-                a(class='active item navigation' href='/signup') Sign Up
-            if currentUser
-                form(action=`/logout` method='POST')
-                    button(class='active item navigation') logout
-                a(class='active item navigation' href=`/users/${currentUser.user_id}`) my dash
-            if !currentUser
-                form(action=`/login`)
-                    button(class='active item navigation') login
-        div(class='ui segment center')
-            if currentUser
-                h1=`${currentUser.user_name}`
-            a(class ='ui positive button' href='/favors/new') New favor:
-            each favor in favors
-                h1=favor.favor_name
-                p=favor.favor_description.substr(0,100) + '...'
-                a(class='ui green basic button' href=`/favors/${favor.favor_id}`) see favor
-                if currentUser
-                    a(class='ui green basic button' href=`/favors`) Add favor
-    include ../partials/footer.html
+include ../partials/header.pug
+div(class='ui segment center')
+    if currentUser
+        h1(style='display: inline-block;') Open Favors
+    a(class='ui blue button' href='/favors/new' style='float: right;') New favor
+    if !favors.length
+        p='No favors to display. Post the first!'
+    each favor in favors
+        h2(class='ui horizontal divider header')=new Date(favor.favor_date)
+        h3=`Favor: ${favor.favor_name}`
+        p=favor.favor_description.substr(0,100) + '...'
+        a(class='ui blue basic button' href=`/favors/${favor.favor_id}`) See favor
+        if currentUser
+            a(class='ui blue basic button' href=`/favors`) Accept favor
+        if favor.expiry_date
+            p(class='expiry_date')=`Expires in ${parseInt((Date.parse(favor.expiry_date) - Date.now()) / 1000 / 60 / 60 / 24)} days`
+        else
+            p(class='expiry_date')='Favor does not expire'
+include ../partials/footer.html

@@ -6,21 +6,31 @@
     text-align: left;
 }
 
-.menu {
+/* .menu {
     height: 7%;
     display: block;
-
-}
-
-.navigation {
-    width: 25%;
-    clear: both;
-}
-
-.ui.menu.four.item .item {
-    width: 30%;
-}
+} */
 
 #logo {
-    width: 10%;
+    width: 70px;
+    height: 70px;
 }
+
+.expiry_date {
+    float: right;
+    font-style: italic;
+}
+
+table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+th {
+    height: 50px;
+}
+
+.ui.menu {
+    border-radius: 0;
+}
+
