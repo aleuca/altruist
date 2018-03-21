@@ -1,15 +1,19 @@
 include ../partials/header.pug
-div(class='ui items')
-    div(class='ui content')
-        p(class='ui header' id='favor_name')=`${favor.favor_name}`
-        p(class='ui description')=`${favor.favor_description}`
-a(class='ui green basic button' href='/favors') Back to all favors
-form(action=`/favors/${favor.favor_id}?_method=DELETE` method='POST')
-    if currentUser
-        if `${currentUser.user_id}` === `${favor.user_id_owner}`
-            button(class='ui green basic button') Delete favor
-if currentUser
-    a(class='ui green basic button' href=`/favors/${favor.favor_id}/edit`) Edit favor
-    a(class='ui green basic button' href=`/favors`) Add favor
+div(class='ui container')
+    div(class='ui items')
+        div(class='ui content')
+            h1(class='ui header' id='favor_name')=`${favor.favor_name}`
+            p(class='ui description')=`${favor.favor_description}`
+            p=`Difficulty: ${favor.favor_difficulty}`
+            p=`Accepted: ${Boolean(favor.user_id_accepted)}`
+            if currentUser
+                if favor.user_id_owner == currentUser.user_id
+                    a(class='ui blue basic button' href=`/favors/${favor.favor_id}/edit`) Edit favor
+                    form(action=`/favors/${favor.favor_id}?_method=DELETE` method='POST' style='display: inline-block')
+                        button(class='ui red button') Delete favor
+                else
+                    a(class='ui blue basic button' href=`/favors`) Accept favor
+
+            a(class='ui blue basic button' href='/favors' style='float: right') Back to all favors
 
 

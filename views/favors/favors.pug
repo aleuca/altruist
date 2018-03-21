@@ -6,14 +6,15 @@ div(class='ui segment center')
     if !favors.length
         p='No favors to display. Post the first!'
     each favor in favors
-        h2(class='ui horizontal divider header')=new Date(favor.favor_date)
-        h3=`Favor: ${favor.favor_name}`
-        p=favor.favor_description.substr(0,100) + '...'
-        a(class='ui blue basic button' href=`/favors/${favor.favor_id}`) See favor
-        if currentUser
-            a(class='ui blue basic button' href=`/favors`) Accept favor
-        if favor.expiry_date
-            p(class='expiry_date')=`Expires in ${parseInt((Date.parse(favor.expiry_date) - Date.now()) / 1000 / 60 / 60 / 24)} days`
-        else
-            p(class='expiry_date')='Favor does not expire'
+        if !favor.user_id_accepted
+            h2(class='ui horizontal divider header')=new Date(favor.favor_date)
+            h3=`Favor: ${favor.favor_name}`
+            p=favor.favor_description.substr(0,100) + '...'
+            a(class='ui blue basic button' href=`/favors/${favor.favor_id}`) See favor
+            if currentUser
+                a(class='ui blue basic button' href=`/favors`) Accept favor
+            if favor.expiry_date
+                p(class='expiry_date')=`Expires in ${parseInt((Date.parse(favor.expiry_date) - Date.now()) / 1000 / 60 / 60 / 24)} days`
+            else
+                p(class='expiry_date')='Favor does not expire'
 include ../partials/footer.html
