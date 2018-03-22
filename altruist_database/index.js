@@ -11,6 +11,9 @@ const pg = require('pg');
  */
 
 let pool;
+
+console.log('db url:', process.env.DATABASE_URL)
+console.log('env:', process.env)
 if (process.env.DATABASE_URL) {
     pool = pg.Pool(process.env.DATABASE_URL);
 } else {
