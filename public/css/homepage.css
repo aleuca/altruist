@@ -37,3 +37,18 @@ th {
     width: 50%;
     margin: 0 auto;
 }
+
+.landing-page {
+    background-color:#0080D3;
+}
+
+#landing-header{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 25%;
+}
+
+#go-to-app {
+    margin-left: 46%;
+}
