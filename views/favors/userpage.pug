@@ -24,7 +24,10 @@ table(class='ui celled table')
               td=`${favor.status}`
               td=`${favor.favor_difficulty}`
               td=`${favor.expiry_date}`
-              td=`User # ${favor.user_id_accepted}`
+              if favor.user_id_accepted
+                td=`User # ${favor.user_id_accepted}`
+              else
+                td='No user has accepted this favor yet'
 
 table(class='ui celled table')
     thead
