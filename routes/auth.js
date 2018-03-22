@@ -12,8 +12,8 @@ const {
 } = require('./authentication');
 
 
-router.get('/signup', function(req, res) {
-    if(!req.user) {
+router.get('/signup', function (req, res) {
+    if (!req.user) {
         res.render('signup');
         return;
     }
@@ -21,22 +21,25 @@ router.get('/signup', function(req, res) {
     res.redirect('/favors');
 });
 
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
     res.render('login');
 });
 
-router.post('/login', userAuth, (req, res) => {
+// second arrow function is error handler
+router.post('/login', userAuth, (req, res, next) => {
+    req.flash('success', "Welcome to ALtruist " + req.user.user_name);
     res.redirect('/favors');
+}, (err, req, res, next) => {
+    if (err) {
+        req.flash('error', err.message);
+    }
+    res.redirect('/login');
 });
 
 router.get('/logout', (req, res) => {
     console.log("TRYING TO LOG OUT", req.session)
-    if(req.session) {
-        req.session.destroy((err) => {
-            res.redirect('/favors');
-        })
-        return;
-    }
+    req.logout();
+    req.flash('success', 'Successful logout!');
     res.redirect('/favors');
 });
 

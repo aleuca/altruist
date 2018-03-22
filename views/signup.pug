@@ -1,16 +1,16 @@
 include ./partials/header.pug
-form(action='/users' method='POST')
-  div.form-group
+form(class='ui form' action='/users' method='POST')
+  div.form-group(class='field')
     label(for='username') Username:
     input(type='text' name='user_name')
-  div.form-group
+  div.form-group(class='field')
     label(for='email') Email:
     input(type='text' name='user_email')
-  div.form-group
+  div.form-group(class='field')
     label(for='user_password') Password:
     input(type='password' name='user_password')
-  div.form-group
+  div.form-group(class='field')
     label(for='password_confirmation') Confirm Password:
     input(type='password' name='user_password_confirmation')
-  button.btn.btn-primary(type='submit') Register
+  button(type='submit' class='ui blue basic button' ) Register
   include ./partials/footer.html

@@ -14,3 +14,10 @@ html
             else
                 a(class='item' href='/signup') Sign Up
                 a(class='item' href='/login') Login
+    div(class='container')
+        if error && error.length
+            div(class='ui warning message' role='alert')
+                h3=error
+        if success && success.length
+            div(class='ui positive message' role='alert')
+                h3=success

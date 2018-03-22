@@ -40,19 +40,18 @@ router.post('/', function(req, res) {
     .catch((err) => {
         if(err) {
             console.log('exists');
-            // user exists in the database -- handle this
+            req.flash('error', 'User already exists');
             return false
         }
     })
     .then((validEmail) => {
-        if(validPassword && validEmail) {
-            insertUser(req, res);
+        if(!validPassword || !validEmail) {
+            req.flash('error', 'Invalid password or email');
+            res.redirect('/favors')
             return;
         }
-        //Need to fix this error
-        res.redirect('/favors')
+        insertUser(req, res);
     })
-
 });
 
 

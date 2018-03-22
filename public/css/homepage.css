@@ -33,3 +33,7 @@ th {
     border-radius: 0;
 }
 
+.ui.form {
+    width: 50%;
+    margin: 0 auto;
+}

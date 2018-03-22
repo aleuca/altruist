@@ -36,7 +36,7 @@ passport.use(new LocalStrategy({
               return;
             }
 
-           done('username and/or password incorrect');
+           done(new Error('username and/or password incorrect'));
         })
         .catch((err) => {
             console.log("Error:", err)

@@ -12,15 +12,15 @@ function insertUser(req, res) {
     .then ((dbResponse) => {
         console.log("dbResponse", dbResponse)
         passport.authenticate("local")(req, res, function() {
-            console.log("Redirecting!")
+            req.flash('success', `Welcome to Altruist, ${req.body.user_name}`)
             res.redirect("/favors");
         });
     // need validator for user email and if it exists in the database already
     // need validator for password and confirm password match
     })
     .catch((err) => {
-        console.log("ERROR:", err)
-        res.status(400).send(err);
+        req.flash('error', 'Error signing up, contact system administrator if this persists.')
+        res.redirect('/favors')
     })
 }
 

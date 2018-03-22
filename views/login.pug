@@ -1,10 +1,10 @@
 include ./partials/header.pug
-form(action='/login' method='POST')
-  div.form-group
+form(class='ui form' action='/login' method='POST')
+  div.form-group(class='field')
     label(for='username') Username:
     input(type='text' name='user_name')
-  div.form-group
+  div.form-group(class='field')
     label(for='password') Password:
     input(type='password' name='user_password')
-  button.btn.btn-primary(type='submit') Login
+  button(type='submit' class='ui blue basic button') Login
 include ./partials/footer.html

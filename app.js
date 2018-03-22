@@ -3,9 +3,11 @@ const express = require('express'),
       parser = require('body-parser'),
       passport = require('passport'),
       session = require('express-session'),
+      flash = require('connect-flash'),
       LocalStrategy = require('passport-local').Strategy,
       methodOverride = require('method-override');
       port = 5000;
+
 
 const favorRoutes = require('./routes/favors');
 const commentRoutes = require('./routes/comments');
@@ -17,10 +19,8 @@ app.use(parser.urlencoded({extended: true}));
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
-// app.use((req, res, next) => {
-//     console.log("Request:", req.path, req.method, req.body)
-//     next()
-// })
+app.use(flash());
+
 
 // ====================
 // PASSPORT CONFIG
@@ -28,12 +28,22 @@ app.use(methodOverride('_method'));
 
 app.use(session({
     rolling: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     secret: 'fuckety fuck',
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+// FLASH CONFIG
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
 
 
 
