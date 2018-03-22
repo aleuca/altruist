@@ -27,7 +27,7 @@ router.get('/login', function (req, res) {
 
 // second arrow function is error handler
 router.post('/login', userAuth, (req, res, next) => {
-    req.flash('success', "Welcome to ALtruist " + req.user.user_name);
+    req.flash('success', "Welcome to ALtruist, " + req.user.user_name);
     res.redirect('/favors');
 }, (err, req, res, next) => {
     if (err) {
