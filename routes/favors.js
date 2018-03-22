@@ -6,9 +6,6 @@ const { authenticateSession: sessionAuth } = require('./authentication')
 
 //INDEX - show all favors
 router.get('/', function(req, res) {
-    console.log("Current user:", req.user)
-    console.log("Process env url in route:", process.env.DATABASE_URL)
-
     const query = 'SELECT * FROM db.favors'
     db.query(query)
     .then((dbResponse) => {
