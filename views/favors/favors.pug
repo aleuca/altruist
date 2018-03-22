@@ -1,19 +1,18 @@
 include ../partials/header.pug
 div(class='ui segment center')
+    h1(style='display: inline-block;') Open Favors
     if currentUser
-        h1(style='display: inline-block;') Open Favors
         a(class='ui blue button' href='/favors/new' style='float: right;') New favor
-
-    if !favors.length
-        p='No favors to display. Post the first!'
+    if !favors.filter((favor) => favor.status === 'open').length
+        p='No open favors to display. Post the first!'
     each favor in favors
-        if !favor.user_id_accepted
+        if favor.status === 'open'
             h2(class='ui horizontal divider header')=new Date(favor.favor_date)
             h3=`Favor: ${favor.favor_name}`
             p=favor.favor_description.substr(0,100) + '...'
             a(class='ui blue basic button' href=`/favors/${favor.favor_id}`) See favor
-            if currentUser
-                a(class='ui blue basic button' href=`/favors`) Accept favor
+            if currentUser && currentUser.user_id != favor.user_id_owner
+                include ../partials/acceptButton.pug
             if favor.expiry_date
                 p(class='expiry_date')=`Expires in ${parseInt((Date.parse(favor.expiry_date) - Date.now()) / 1000 / 60 / 60 / 24)} days`
             else

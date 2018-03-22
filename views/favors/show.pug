@@ -5,14 +5,20 @@ div(class='ui container')
             h1(class='ui header' id='favor_name')=`${favor.favor_name}`
             p(class='ui description')=`${favor.favor_description}`
             p=`Difficulty: ${favor.favor_difficulty}`
-            p=`Accepted: ${Boolean(favor.user_id_accepted)}`
+            p=`Status: ${favor.status}`
             if currentUser
                 if favor.user_id_owner == currentUser.user_id
                     a(class='ui blue basic button' href=`/favors/${favor.favor_id}/edit`) Edit favor
                     form(action=`/favors/${favor.favor_id}?_method=DELETE` method='POST' style='display: inline-block')
                         button(class='ui red button') Delete favor
                 else
-                    a(class='ui blue basic button' href=`/favors`) Accept favor
+                    if favor.status == 'open'
+                        include ../partials/acceptButton.pug
+                    if favor.status == 'in_progress' && favor.user_id_accepted == currentUser.user_id
+                        form(action=`/favors/${favor.favor_id}/drop` method='POST' style='display: inline-block')
+                            button(class='ui red button') Drop favor
+                        form(action=`/favors/${favor.favor_id}/complete` method='POST' style='display: inline-block')
+                            button(class='ui blue button') Mark favor as complete
 
             a(class='ui blue basic button' href='/favors' style='float: right') Back to all favors
 

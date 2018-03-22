@@ -1,5 +1,7 @@
 DROP SCHEMA IF EXISTS db CASCADE;
+DROP TYPE IF EXISTS STATUS;
 CREATE SCHEMA db;
+CREATE TYPE STATUS AS ENUM ('open', 'in_progress', 'closed', 'expired');
 
 CREATE TABLE db.users(
     user_id BIGSERIAL PRIMARY KEY,
@@ -21,6 +23,7 @@ CREATE TABLE db.favors(
     favor_difficulty TEXT,
     user_id_accepted INTEGER,
     user_id_owner INTEGER,
+    status STATUS DEFAULT 'open',
     FOREIGN KEY(user_id_owner) REFERENCES db.users(user_id)
 );
 

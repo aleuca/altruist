@@ -60,15 +60,26 @@ router.post('/', function(req, res) {
 router.get('/:id', sessionAuth, function(req, res) {
     const ownedQuery = 'SELECT * FROM db.favors where user_id_owner = $1'
     const acceptedQuery = 'SELECT * FROM db.favors where user_id_accepted = $1'
+    const userQuery = 'SELECT * FROM db.users where user_id = $1'
 
-    const userValues = [req.user.user_id]
+    const userValues = [req.params.id]
 
     Promise.all([
         db.query(ownedQuery, userValues),
         db.query(acceptedQuery, userValues),
+        db.query(userQuery, userValues),
     ])
-    .then (([ownedResponse, acceptedResponse]) => {
-        res.render('favors/userpage', { currentUser: req.user, ownedFavors: ownedResponse.rows, acceptedFavors: acceptedResponse.rows });
+    .then (([ownedResponse, acceptedResponse, userResponse]) => {
+        if(!userResponse.rows.length) {
+            res.redirect('/favors');
+            return;
+        }
+        res.render('favors/userpage', {
+            currentUser: req.user,
+            ownedFavors: ownedResponse.rows,
+            acceptedFavors: acceptedResponse.rows,
+            user: userResponse.rows[0]
+        });
     })
     .catch((err) => {
         res.status(400).send(err);

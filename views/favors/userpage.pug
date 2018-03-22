@@ -2,7 +2,10 @@ include ../partials/header.pug
 table(class='ui celled table')
   thead
     tr
-      th='My favors'
+      if user.user_id != currentUser.user_id
+        th='Their favors'
+      else
+        th='My favors'
   tbody
     tr
       table(class='ui celled table')
@@ -12,18 +15,23 @@ table(class='ui celled table')
             th="Status"
             th="Difficulty"
             th="Expiry Date"
+            th="Favor Friend"
         tbody
           each favor in ownedFavors
             tr
               td
                 a(href=`/favors/${favor.favor_id}`)=`${favor.favor_name}`
-              td=`${favor.favor_status}`
+              td=`${favor.status}`
               td=`${favor.favor_difficulty}`
               td=`${favor.expiry_date}`
+              td=`User # ${favor.user_id_accepted}`
 
 table(class='ui celled table')
     thead
       tr
+      if user.user_id != currentUser.user_id
+        th='Favors They\'ve Accepted'
+      else
         th='Favors I\'ve Accepted'
     tbody
       tr
@@ -39,6 +47,6 @@ table(class='ui celled table')
               tr
                 td
                   a(href=`/favors/${favor.favor_id}`)=`${favor.favor_name}`
-                td=`${favor.favor_status}`
+                td=`${favor.status}`
                 td=`${favor.favor_difficulty}`
                 td=`${favor.expiry_date}`
