@@ -59,7 +59,7 @@ app.use('/favors', favorRoutes);
 
 
 app.listen(process.env.PORT || port, function(){
-    console.log("server running");
+    console.log(`server running on ${process.env.PORT || port}`);
 });
 
 

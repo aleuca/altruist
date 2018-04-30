@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/*.test.js",
     "start": "node app.js",
     "start-dev": "nodemon app.js",
     "seed-db": "node altruist_database/init.js"
@@ -23,5 +23,11 @@
     "passport-local": "1.0.0",
     "pg": "7.4.1",
     "pug": "2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "faker": "4.1.0",
+    "mocha": "5.0.5",
+    "request": "2.85.0",
+    "request-promise": "4.2.2"
   }
 }
